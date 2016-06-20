@@ -1,0 +1,57 @@
+---
+title: "Introduction to ImmuneSpaceR, BioC 2016"
+date: "`r Sys.Date()`"
+output: html_document
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Introduction to ImmuneSpaceR}
+---
+
+
+# Connections
+library(ImmuneSpaceR)
+con <- CreateConnection("SDY269")
+
+# Datasets
+hai <- con$getDataset("hai")
+hai <- con$getDataset("hai", original_view = TRUE)
+library(Rlabkey)
+virus_filter <- makeFilter(c("virus", "CONTAINS", "H1N1"))
+hai_f <- con$getDataset("hai", colFilter = virus_filter)
+virus_filter <- makeFilter(c("virus", "EQUAL", "A/Brisbane/59/2007 (H1N1)"))
+hai_f <- con$getDataset("hai", colFilter = virus_filter)
+
+analyte_filter <- makeFilter(c("Analyte", "EQUAL", "IFNg"), c("Study time collected", "EQUAL", "7"))
+elisa <- con$getDataset("elisa", colFilter = analyte_filter)
+
+# Cross assay
+hai_f[, value_reported[study_time_collected == 28] - value_reported[study_time_collected == 0], by = "participant_id"]
+
+
+# QP
+con$quick_plot("hai", normalize = FALSE)
+con$quick_plot("hai", filter = virus_filter, normalize = FALSE, color = "Age", shape = "Gender")
+
+# Expression
+con$listDatasets(which = "expression")
+em <- con$getGEMatrix(x = "TIV_2008")
+em <- con$getGEMatrix(cohort = "TIV Group 2008")
+em <- con$getGEMatrix("TIV_2008", summary = TRUE)
+library(Biobase)
+head(pData(em))
+
+ems <- con$getGEMatrix(c("TIV_2008", "LAIV_2008"), summary = TRUE) #Summary usually better for cross cohort (& cross study)
+
+
+# Cross study
+all <- CreateConnection("")
+all
+
+ahai <- all$getDataset("hai")
+ahai <- all$getDataset("hai", colFilter = virus_filter)
+
+## EM cross-study
+csem <- all$getGEMatrix(c("SDY63_young_PBMC_year1", "SDY404_young_PBMC_year2"), summary = TRUE)
+
+
+

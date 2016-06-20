@@ -1,0 +1,62 @@
+---
+title: "Introdution to ImmuneSpaceR"
+author: Renan Sauteraud
+date: June 25, 2016
+autosize: true
+output:
+  ioslides_presentation:
+    widescreen: true
+---
+<style>
+//h2{
+//  color: white;
+//}
+//h3{
+//  color: green;
+//}
+</style>
+
+## Plan
+
+- Instantiate connection
+- Get data
+- Cross assay
+- Cross study
+- Use case with external data
+- Future
+
+## .netrc
+
+ImmuneSpace uses `Curl` for connections to the database. The login and password
+information must be stored into a .netrc file.
+```
+machine   www.immunespace.org
+login     bioc16@immunespace.org
+password  pwd
+```
+
+For this workshop, we can write a temporary file that will be deleted at the end
+of the session.
+```{r}
+library(ImmuneSpaceR)
+write_netrc(login = "bioc16@immunespace.org", password = "pwd")
+```
+
+
+## Instantiate a connection {.smaller}
+
+```{r CreateConnection}
+con <- CreateConnection("SDY269")
+con
+```
+
+## Get data
+
+
+## Future
+- Rework the instantiation to allow connection to a subset of studies 
+    `CreateConnection(c("SDY61", "SDY269"))`
+- Use <a href="https://www.immunespace.org/project/Studies/begin.view?">Data Finder</a> filter in R
+- Integration of Rstudio to ImmuneSpace (spawn pre-filtered R sessions)
+- Accept user made R/Rmd reports on ImmuneSpace
+- Improve testing of both ImmuneSpaceR & ImmuneSpace
