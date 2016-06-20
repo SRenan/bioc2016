@@ -1,8 +1,27 @@
 Package: bioc2016
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Material for ImmuneSpaceR workshop
 Version: 0.1.0
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Authors@R: Renan Sauteraud
+Description: Material for the Introduction to ImmuneSpaceR workshop at BioC2016
+License: GPL-2
 LazyData: TRUE
+SystemRequirements:	libcurl
+Suggests:
+  knitr,
+  rmarkdown
+Depends:
+  ImmuneSpaceR
+Imports:
+  methods,
+  data.table,
+  RCurl,
+  Rlabkey (>= 2.1.127),
+  Biobase,
+  pheatmap,
+  ggplot2,
+  scales,
+  stats,
+  gtools,
+  gplots,
+  reshape2
