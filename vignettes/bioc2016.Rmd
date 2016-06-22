@@ -29,7 +29,7 @@ Two cohorts vaccinated with TIV (2007 & 2008). And one with LAIV (2008).
 ## Fetching data from GEO
 The data was made available on GEO after publication. The [SuperSeries](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE29619)
 is referenced in the paper.
-```{r usecase, cache = TRUE}
+```{r usecase}
 library(GEOquery)
 gse <- getGEO("GSE29619")
 ```
@@ -100,7 +100,7 @@ Reference classes or `R5`. Functions are members of the object, thus the $
 semantics to access member functions in the following samples.
 
 ## Download gene expression
-```{r getGEM_TIV2008, cache = TRUE}
+```{r getGEM_TIV2008}
 TIV2008 <- sdy269$getGEMatrix("TIV_2008")
 TIV2008
 ```
@@ -114,12 +114,12 @@ Only essential information is displayed in the phenoData,
 returns the matrix with expression values averaged by gene. Allowing an easy 
 merge of the two ExpressionSets.
 
-```{r getGEM_multicohorts, cache = TRUE}
+```{r getGEM_multicohorts}
 es269 <- sdy269$getGEMatrix(c("TIV_2008", "LAIV_2008"), summary = TRUE)
 es269
 ```
 For convenience, cohorts can also be downloaded by names.
-```{r getGEM_cohortnames, cache = TRUE}
+```{r getGEM_cohortnames}
 es269 <- sdy269$getGEMatrix(cohort = c("TIV Group 2008", "LAIV group 2008"), summary = TRUE)
 ```
 
@@ -131,7 +131,7 @@ results accross these two studies to get the data that was used in the publicati
 
 In order to query multiple studies, we can instantiate a connection to all 
 studies at once.
-```{r, cache = TRUE}
+```{r}
 all <- CreateConnection("") #All studies
 es <- all$getGEMatrix(c("TIV_2007", "TIV_2008", "LAIV_2008"), summary = TRUE)
 head(pData(es))
@@ -152,6 +152,7 @@ database.
 ### Downloading
 They can be accessed using the `getDataset` function.
 ```{r listds}
+library(data.table)
 sdy269$listDatasets()
 hai <- sdy269$getDataset("hai")
 hai
@@ -208,16 +209,22 @@ is enough to combine data accross assays and bind metadata.
 <hr>
 # What else?
 ## Quick plot
-
-
+For the exploration of most datasets, `quick_plot` is a function that takes
+advantage of the standardized datasets to plot the data in a relevant fashion.
+It has a limited number of options and should be used for having a first look at
+the data.  
+More advanced plots can be achieved by downloading the data in the R session, as
+seen in the use case above.
 ```{r quick-plot}
 sdy269$quick_plot("hai", normalize = FALSE)
 sdy269$quick_plot("hai", filter = virus_filter2, normalize = FALSE, color = "Age", shape = "Gender")
 ```
+This is the same function that is used by the interactive 
+[Data Explorer Module](https://www.immunespace.org/DataExplorer/Studies/begin.view).
 
 ```{r qp_cross}
-virus_filter3 <- makeFilter(c("cohort", "contains", "TIV"))
-all$quick_plot("hai", filter = virus_filter3, normalize = TRUE)
+virus_filter3 <- makeFilter(c("cohort", "contains", "TIV"), c("study_time_collected", "IN", "0;21;28;30;180"))
+all$quick_plot("hai", filter = virus_filter3, normalize = TRUE, color = "Age")
 ```
 
 ## Online R/Rmd reports
@@ -229,9 +236,10 @@ available and will work both through LabKey's report on the web portal and local
 <br>
 
 
-## Technical aspect
+## Technical details
 * Reference classes for performance and caching
 * Connections to the database are made with `RCurl`
+* `data.table` for handling downloaded datasets
 
 
 ## Future
