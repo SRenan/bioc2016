@@ -85,7 +85,7 @@ retrieve the gene-expression data and associated metadata.
 ## Connect to ImmuneSpace
 
 The study SDY269 holds the data for the two 2008 cohorts, LAIV and TIV. <br>
-![](/home/rsautera/Pictures/ImmuneSpace/sdy269.png)
+![](sdy269.png)
 <center>A study overview page on ImmuneSpace</center>
 <br>
 First, we instantiate a connection to the study of interest. 
@@ -145,7 +145,7 @@ It is also a lot faster than GEO as each matrix is available as a single file.
 Unlike expresssion matrices, the other datasets are stored as tables in the
 database. 
 
-![](/home/rsautera/Pictures/ImmuneSpace/sdy269hai.png)
+![](sdy269hai.png)
 <center>SDY269 HAI dataset as visible on ImmuneSpace</center>
 <br>
 
@@ -231,7 +231,7 @@ all$quick_plot("hai", filter = virus_filter3, normalize = TRUE, color = "Age")
 The reports available on ImmuneSpace are written using ImmuneSpaceR. The code is
 available and will work both through LabKey's report on the web portal and locally.
 
-![](/home/rsautera/workspace/git/bioc2016/inst/img/sdy180report_cropped.png)
+![](sdy180report_cropped.png)
 <center>Example of live report available in SDY180</center>
 <br>
 
