@@ -17,9 +17,9 @@ opts_chunk$set(message = FALSE, warning = FALSE)
 opts_chunk$set(fig.align = "center", fig.width = 10)
 ```
 
-# Use case: System biology of Influenza
+# Use case: Systems biology of Influenza
 Reproducing results of a publication. **Systems biology of vaccination for seasonal
-influenza in humans**. Nakaya et al (2011).  
+influenza in humans**. [Nakaya et al (2011)](http://www.ncbi.nlm.nih.gov/pubmed/21743478).  
 The paper uses system biology approach to study immune response to vaccination 
 against influenza in three seasons.  
 Two cohorts vaccinated with TIV (2007 & 2008). And one with LAIV (2008).
